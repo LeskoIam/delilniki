@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+    <div id="tabela">
+        <table border="1">
+        <tr>
+            <th>id</th>
+            <th>datetime</th>
+            <th>value</th>
+            <th>unit</th>
+            <th>sensor name</th>
+            <th>location</th>
+        </tr>
+            {% for data, sensor in sensor_data %}
+                <tr>
+                <td>{{ data.id }}</td>
+                <td>{{ data.timestamp }}</td>
+                <td align="center">{{ data.value }}</td>
+                {% if data.unit != None %}
+                    <td>{{ data.unit }}</td>
+                {% else %}
+                    <td>&nbsp;</td>
+                {% endif %}
+                <td>{{ sensor.name}}</td>
+                <td>{{ sensor.location }}</td>
+            {% endfor %}
+        </table>
+
+    </div>
+    <div id="plots">
+        {{ data.plot_heat_dividers|safe }}
+        {{ data.plot_water_counter|safe }}
+        {{ data.plot_heat_consumption|safe }}
+        {{ data.plot_water_consumption|safe }}
+    </div>
+{% endblock %}

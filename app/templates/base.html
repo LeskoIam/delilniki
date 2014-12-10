@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    {% if data.title %}
+        <title>{{ data.title }}</title>
+    {% else %}
+        <title>Delilniki</title>
+    {% endif %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='show.css') }}">
+</head>
+
+
+<!-- background="{{ url_for("static", filename="bgimage.jpg") }}" -->
+<body>
+{% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+            <b>{{ message }}</b> <br />
+        {% endfor %}
+      {% endif %}
+{% endwith %}
+<div>{{ data.title }}:
+    <a href="/index">Domov</a>&nbsp;|&nbsp;
+    <a href="/value_input">Value Input</a>&nbsp;|&nbsp;
+    <a href="/show">Show</a>
+</div>
+<hr>
+{% block content %}{% endblock %}
+</body>
+</html>
+
+
+

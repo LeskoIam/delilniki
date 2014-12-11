@@ -3,19 +3,6 @@ from app import db
 from app.models import SensorData, Sensor
 
 
-# First plot bar-chart for every room & sensor type (voda/delilniki)
-#
-#
-#
-
-def get_last_reading(sensor_type, sensor_location, sensor_name):
-    sensor_data = db.session.query(SensorData, Sensor). \
-        join(Sensor).filter(Sensor.type == sensor_type). \
-        filter(Sensor.location == sensor_location).filter(Sensor.name == sensor_name).\
-        order_by(SensorData.timestamp.desc()).limit(1)
-    return float(sensor_data.all()[0][0].value)
-
-
 def get_last_readings(heat_or_water):
     heat = False
     if heat_or_water.lower() == "heat":
@@ -41,14 +28,6 @@ def get_last_readings(heat_or_water):
     return d
 
 
-def get_last_heat_dividers(location):
-    return get_last_reading("delilnik", location, "delilnik")
-
-
-def get_last_water_counter(hot_cold):
-    return get_last_reading("merilna ura", "hodnik", hot_cold)
-
-
 def get_heat_consumption(location):
     out = db.session.query(SensorData.value, SensorData.timestamp).\
         join(Sensor).filter(Sensor.type == "delilnik").\
@@ -56,7 +35,7 @@ def get_heat_consumption(location):
     return out.all()
 
 
-def get_water_consumption(hot_cold):
+def get_water_consumption_data(hot_cold):
     out = db.session.query(SensorData.value, SensorData.timestamp).\
         join(Sensor).filter(Sensor.type == "merilna ura").\
         filter(Sensor.location == "hodnik").filter(Sensor.name == hot_cold).order_by(SensorData.timestamp.asc())
@@ -64,13 +43,8 @@ def get_water_consumption(hot_cold):
 
 if __name__ == '__main__':
 
-    print get_last_reading("merilna ura", "hodnik", "hladna voda")
-
-    print get_last_heat_dividers("kopalnica")
-
-    print get_last_water_counter("topla voda")
-
-    print get_water_consumption("topla voda")
+    print get_water_consumption_data("topla voda")
+    print get_water_consumption_data("hladna voda")
 
     a = get_last_readings("heat")
     print a, type(a)

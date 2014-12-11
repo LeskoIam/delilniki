@@ -29,7 +29,7 @@ def running_consumption(data, time_series):
         # print type(t_d)
         # print d_d, "|", t_d, "|", float(t_d.total_seconds())/60/60, (float(d_d)/float(t_d.total_seconds()))*60*60*24
         out_data.append((float(d_d)/float(t_d.total_seconds()))*60*60*24)
-    return out_data
+    return out_data, data_d, time_d
 
 
 if __name__ == '__main__':

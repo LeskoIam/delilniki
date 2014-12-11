@@ -28,14 +28,14 @@ def get_last_readings(heat_or_water):
     return d
 
 
-def get_heat_consumption(location):
+def get_heat_data(location):
     out = db.session.query(SensorData.value, SensorData.timestamp).\
         join(Sensor).filter(Sensor.type == "delilnik").\
         filter(Sensor.location == location).order_by(SensorData.timestamp.asc())
     return out.all()
 
 
-def get_water_consumption_data(hot_cold):
+def get_water_data(hot_cold):
     out = db.session.query(SensorData.value, SensorData.timestamp).\
         join(Sensor).filter(Sensor.type == "merilna ura").\
         filter(Sensor.location == "hodnik").filter(Sensor.name == hot_cold).order_by(SensorData.timestamp.asc())
@@ -43,8 +43,8 @@ def get_water_consumption_data(hot_cold):
 
 if __name__ == '__main__':
 
-    print get_water_consumption_data("topla voda")
-    print get_water_consumption_data("hladna voda")
+    print get_water_data("topla voda")
+    print get_water_data("hladna voda")
 
     a = get_last_readings("heat")
     print a, type(a)

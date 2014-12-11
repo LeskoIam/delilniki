@@ -27,6 +27,8 @@
 
     </div>
     <div id="plots">
+        {{ data.plot_heat|safe }}
+        {{ data.plot_water|safe }}
         {{ data.plot_heat_dividers|safe }}
         {{ data.plot_water_counter|safe }}
         {{ data.plot_heat_consumption|safe }}

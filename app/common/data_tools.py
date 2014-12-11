@@ -41,6 +41,7 @@ def get_water_data(hot_cold):
         filter(Sensor.location == "hodnik").filter(Sensor.name == hot_cold).order_by(SensorData.timestamp.asc())
     return out.all()
 
+
 if __name__ == '__main__':
 
     print get_water_data("topla voda")
@@ -51,7 +52,3 @@ if __name__ == '__main__':
 
     a = get_last_readings("water")
     print a, type(a)
-    # d = {}
-    # for x in a:
-    #     d[x.location] = x.value
-    # print d

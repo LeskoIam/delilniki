@@ -53,6 +53,3 @@ class SensorData(db.Model):
 
     def __repr__(self):
         return '<SensorData %r %r %r>' % (self.id, self.value, self.unit)
-
-if __name__ == '__main__':
-    db.co

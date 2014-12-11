@@ -4,8 +4,8 @@ from app import app, db
 from .forms import MeasurePointsForm
 from models import SensorData, Sensor
 import datetime
-import common.num_tools as num_tools
 import common.plot_tools as plot_tools
+
 
 @app.route('/')
 @app.route('/index')
@@ -65,8 +65,9 @@ def value_input():
 
 @app.route("/show")
 def show():
-    sensor_data = db.session.query(SensorData, Sensor).join(Sensor).order_by(SensorData.timestamp.desc()).order_by(Sensor.type)
-    #print sensor_data[0][0].timestamp
+    sensor_data = db.session.query(SensorData, Sensor).join(Sensor).\
+        order_by(SensorData.timestamp.desc()).order_by(Sensor.type)
+    # print sensor_data[0][0].timestamp
     data = {"title": title_handler("Show All"),
             "plot_heat": plot_tools.plot_heat(),
             "plot_water": plot_tools.plot_water(),

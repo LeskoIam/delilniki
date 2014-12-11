@@ -1,8 +1,8 @@
 __author__ = 'Lesko'
 
 from flask.ext.wtf import Form
-from wtforms import FloatField  # StringField  # , BooleanField
-from wtforms.validators import DataRequired, InputRequired
+from wtforms import FloatField
+from wtforms.validators import InputRequired
 
 
 class MeasurePointsForm(Form):
@@ -12,4 +12,3 @@ class MeasurePointsForm(Form):
     soba = FloatField("soba", validators=[InputRequired()])
     hladna_voda = FloatField("hladna_voda", validators=[InputRequired()])
     topla_voda = FloatField("topla_voda", validators=[InputRequired()])
-    # remember_me = BooleanField('remember_me', default=False)

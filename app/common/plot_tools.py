@@ -10,7 +10,7 @@ from num_tools import running_consumption
 def plot_last_heat_dividers():
     bar_chart = pygal.Bar(show_legend=False, width=600, height=300, explicit_size=True, style=CleanStyle,
                           y_labels_major_every=3, show_minor_y_labels=False)
-    bar_chart.title = "Delilniki toplote [enot]"
+    bar_chart.title = "Delilniki toplote - zadnje stanje [enot]"
     data_in = get_last_readings("heat")
     legend = []
     data = []
@@ -25,7 +25,7 @@ def plot_last_heat_dividers():
 def plot_last_water_counter():
     bar_chart = pygal.Bar(show_legend=False, width=600, height=300, explicit_size=True, style=CleanStyle,
                           y_labels_major_every=3, show_minor_y_labels=False)
-    bar_chart.title = "Stevec vode [m3]"
+    bar_chart.title = "Stevec vode - zadnje stanje [m3]"
     data_in = get_last_readings("water")
     legend = []
     data = []
@@ -76,8 +76,9 @@ def plot_water_consumption():
 def plot_heat():
     locations = ["kuhinja", "hodnik", "kopalnica", "soba"]
     bar_chart = pygal.Line(width=600, height=300, explicit_size=True, style=CleanStyle,
-                           y_labels_major_every=2, show_minor_y_labels=False)
-    bar_chart.title = "Delilniki toplote cez cas [enot]"
+                           y_labels_major_every=2, show_minor_y_labels=False,
+                           x_label_rotation=35)
+    bar_chart.title = "Delilniki toplote - cez cas [enot]"
     for loc in locations:
         data_in = get_heat_data(loc)
         data = []
@@ -94,8 +95,9 @@ def plot_water():
     topla_hladna = get_water_data("topla voda"), get_water_data("hladna voda")
     topla_hladna_str = ["topla voda", "hladna voda"]
     bar_chart = pygal.Line(width=600, height=300, explicit_size=True, style=CleanStyle,
-                           y_labels_major_every=2, show_minor_y_labels=False)
-    bar_chart.title = "Stevec vode cez cas [m3]"
+                           y_labels_major_every=2, show_minor_y_labels=False,
+                           x_label_rotation=35)
+    bar_chart.title = "Stevec vode - cez cas [m3]"
     for x, tp in enumerate(topla_hladna):
         data = []
         timestamp = []

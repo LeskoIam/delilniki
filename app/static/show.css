@@ -5,3 +5,8 @@
 #plots {
     margin-left: 40%;
 }
+
+#plot {
+    border: ridge black;
+    padding: 15px;
+}

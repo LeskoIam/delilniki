@@ -27,11 +27,21 @@
 
     </div>
     <div id="plots">
-        {{ data.plot_heat|safe }}
-        {{ data.plot_water|safe }}
-        {{ data.plot_heat_dividers|safe }}
-        {{ data.plot_water_counter|safe }}
-        {{ data.plot_heat_consumption|safe }}
-        {{ data.plot_water_consumption|safe }}
+        <div id="plot">
+            {{ data.plot_heat_dividers|safe }}
+        </div>
+        <div id="plot">
+            {{ data.plot_water_counter|safe }}
+        </div>
+        <div id="plot">
+            {{ data.plot_heat|safe }}
+        </div>
+        <div id="plot">
+            {{ data.plot_water|safe }}
+        </div>
+        <div>
+            {{ data.plot_heat_consumption|safe }}
+            {{ data.plot_water_consumption|safe }}
+        </div>
     </div>
 {% endblock %}

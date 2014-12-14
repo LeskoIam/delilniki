@@ -40,6 +40,7 @@ def plot_heat_consumption():
     line_chart = pygal.Line(width=600, height=300, explicit_size=True, style=CleanStyle,
                             y_labels_major_every=2, show_minor_y_labels=False)
     line_chart.title = "Poraba toplote [enot/dan]"
+    text = "<hr>Povprecna poraba [enot/dan]<br />"
     for loc in locations:
         data_in = data_tools.get_heat_data(loc)
         data = []
@@ -49,8 +50,12 @@ def plot_heat_consumption():
             time_delta.append(d[1])
         data, _, dt = num_tools.running_consumption(data, time_delta)
         line_chart.add(loc, data)
+        text += loc.capitalize() + ": %3.3f<br />" % num_tools.mean(data)
     line_chart.x_labels = map(str, dt)
-    return line_chart.render(is_unicode=True)
+    out = "<div id=\"plot\">"
+    out += line_chart.render(is_unicode=True) + "<br />" + text
+    out += "</div>"
+    return out
 
 
 def plot_water_consumption():
@@ -59,6 +64,7 @@ def plot_water_consumption():
     line_chart = pygal.Line(width=600, height=300, explicit_size=True, style=CleanStyle,
                             y_labels_major_every=2, show_minor_y_labels=False)
     line_chart.title = "Poraba vode [liter/dan]"
+    text = "<hr>Povprecna poraba [liter/dan]<br />"
     for x, tp in enumerate(topla_hladna):
         cons = []
         timestamp = []
@@ -67,8 +73,12 @@ def plot_water_consumption():
             timestamp.append(d[1])
         data, _, dt = num_tools.running_consumption(cons, timestamp)
         line_chart.add(topla_hladna_str[x], data)
+        text += topla_hladna_str[x].capitalize() + ": %3.3f<br />" % num_tools.mean(data)
     line_chart.x_labels = map(str, dt)
-    return line_chart.render(is_unicode=True)
+    out = "<div id=\"plot\">"
+    out += line_chart.render(is_unicode=True) + "<br />" + text
+    out += "</div>"
+    return out
 
 
 def plot_heat():

@@ -51,6 +51,7 @@ def plot_heat_consumption():
         data, _, dt = num_tools.running_consumption(data, time_delta)
         line_chart.add(loc, data)
         text += loc.capitalize() + ": %3.3f<br />" % num_tools.mean(data)
+        print loc.capitalize(), num_tools.st_dev(data)
     line_chart.x_labels = map(str, dt)
     out = "<div id=\"plot\">"
     out += line_chart.render(is_unicode=True) + "<br />" + text
@@ -74,6 +75,7 @@ def plot_water_consumption():
         data, _, dt = num_tools.running_consumption(cons, timestamp)
         line_chart.add(topla_hladna_str[x], data)
         text += topla_hladna_str[x].capitalize() + ": %3.3f<br />" % num_tools.mean(data)
+        print topla_hladna_str[x].capitalize(), num_tools.st_dev(data)
     line_chart.x_labels = map(str, dt)
     out = "<div id=\"plot\">"
     out += line_chart.render(is_unicode=True) + "<br />" + text

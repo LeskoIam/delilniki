@@ -17,12 +17,17 @@ def median(data):
 
 
 def st_dev(data):
+    """Return standard sample deviation of input data
+
+    :param data: 1D, list, tuple,...
+    :return:
+    """
     data_len = float(len(data))
     data_mean = mean(data)
     data1 = []
     for x in data:
         data1.append((x - data_mean)**2)
-    return math.sqrt(sum(data1)/data_len)
+    return math.sqrt(sum(data1)/(data_len - 1))
 
 
 def diff(data):

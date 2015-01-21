@@ -57,7 +57,7 @@ def value_input():
 
         db.session.commit()
         flash("Uspesno ste vnesli podatke!")
-        return redirect('/index')
+        return redirect('/show')
     return render_template('input_form.html',
                            form=form,
                            data=data)

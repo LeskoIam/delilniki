@@ -1,9 +1,14 @@
 #tabela {
-    width: 40%;
+    width: 50%;
     float: left;
 }
-#plots {
-    margin-left: 40%;
+#plots_right {
+    margin-left: 50%;
+}
+
+#plots_left {
+    width: 98%;
+    padding-top: 15px;
 }
 
 #plot {

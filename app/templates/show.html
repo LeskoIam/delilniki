@@ -24,9 +24,12 @@
                 <td>{{ sensor.location }}</td>
             {% endfor %}
         </table>
-
+    <div id="plots_left">
+        {{ data.plot_heat_consumption|safe }}
+        {{ data.plot_water_consumption|safe }}
     </div>
-    <div id="plots">
+    </div>
+    <div id="plots_right">
         <div id="plot">
             {{ data.plot_heat_dividers|safe }}
         </div>
@@ -38,10 +41,6 @@
         </div>
         <div id="plot">
             {{ data.plot_water|safe }}
-        </div>
-        <div>
-            {{ data.plot_heat_consumption|safe }}
-            {{ data.plot_water_consumption|safe }}
         </div>
     </div>
 {% endblock %}

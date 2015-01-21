@@ -56,6 +56,20 @@ def running_consumption(data, time_series):
     return out_data, data_d, time_d
 
 
+class Simplemovingaverage():
+    def __init__(self, navg, items):
+        self.navg = navg
+        self.items = items
+
+    def calculate(self):
+        av = []
+        for i in range(len(self.items)):
+            if i + 1 < self.navg:
+                av.append(0)
+            else:
+                av.append(sum(self.items[i + 1 - self.navg:i + 1]) / self.navg)
+        return av
+
 if __name__ == '__main__':
     import datetime
     data = [8, 15, 23, 26, 10, 12, 15]
@@ -79,3 +93,9 @@ if __name__ == '__main__':
     print mean(a)
     print median(a)
     print st_dev(a)
+
+
+    m1 = Simplemovingaverage(3, data)
+    m2 = Simplemovingaverage(6, data)
+    print m1.calculate()
+    print m2.calculate()

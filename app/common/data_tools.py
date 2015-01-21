@@ -11,7 +11,7 @@ def get_last_readings(heat_or_water):
     elif heat_or_water.lower() == "water":
         s_type = "merilna ura"
     else:
-        raise AttributeError("'{t}' is not OK use 'heat' or 'water'".format(t=heat_or_water))
+        raise AttributeError("'{t}' is not OK! Use 'heat' or 'water'".format(t=heat_or_water))
     out = db.session.query(SensorData.timestamp).\
         order_by(SensorData.timestamp.desc()).limit(1)
 
@@ -38,9 +38,9 @@ def get_heat_data(location):
 def get_water_data(hot_cold):
     out = db.session.query(SensorData.value, SensorData.timestamp).\
         join(Sensor).filter(Sensor.type == "merilna ura").\
-        filter(Sensor.location == "hodnik").filter(Sensor.name == hot_cold).order_by(SensorData.timestamp.asc())
+        filter(Sensor.location == "hodnik").filter(Sensor.name == hot_cold).\
+        order_by(SensorData.timestamp.asc())
     return out.all()
-
 
 if __name__ == '__main__':
 

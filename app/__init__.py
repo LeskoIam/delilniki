@@ -19,15 +19,27 @@ if __name__ == '__main__':
     #     join(models.Sensor).filter(models.Sensor.type == "delilnik").\
     #     filter(models.Sensor.location == "soba").order_by(models.SensorData.timestamp.asc())
 
-    out = db.session.query(models.SensorData.timestamp).\
-        order_by(models.SensorData.timestamp.desc()).limit(1)
+    # out = db.session.query(models.SensorData.timestamp).\
+    #     order_by(models.SensorData.timestamp.desc()).limit(1)
+    #
+    # out1 = db.session.query(models.SensorData.value,
+    #                         models.SensorData.timestamp,
+    #                         models.Sensor.location).\
+    #     join(models.Sensor).filter(models.SensorData.timestamp == out)
 
-    out1 = db.session.query(models.SensorData.value,
-                            models.SensorData.timestamp,
-                            models.Sensor.location).\
-        join(models.Sensor).filter(models.SensorData.timestamp == out)
-
-    print out1
-    for a in out1.all():
-        print a
-    print "----------"
+    # now = datetime.today()
+    # date_object = timedelta(days=3)
+    # search_date = now - date_object
+    # out = db.session.query(models.SensorData.value, models.SensorData.timestamp).\
+    #     join(models.Sensor).\
+    #     filter(models.Sensor.type == "merilna ura").\
+    #     filter(models.Sensor.location == "hodnik").\
+    #     filter(models.Sensor.name == "topla voda").\
+    #     filter(models.SensorData.timestamp >= search_date).\
+    #     order_by(models.SensorData.timestamp.asc())
+    #
+    # print out.all()
+    # for a in out.all():
+    #     print a
+    # print "----------"
+    pass

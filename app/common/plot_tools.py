@@ -9,7 +9,7 @@ def plot_last_heat_dividers():
     bar_chart = pygal.Bar(show_legend=False, width=600, height=300, explicit_size=True, style=CleanStyle,
                           y_labels_major_every=3, show_minor_y_labels=False)
     bar_chart.title = "Delilniki toplote - zadnje stanje [enot]"
-    data_in = data_tools.get_last_readings("heat")
+    data_in = data_tools.get_last_readings(data_tools.get_sensor_ids("heat"))
     legend = []
     data = []
     for d in data_in:
@@ -24,7 +24,7 @@ def plot_last_water_counter():
     bar_chart = pygal.Bar(show_legend=False, width=600, height=300, explicit_size=True, style=CleanStyle,
                           y_labels_major_every=3, show_minor_y_labels=False)
     bar_chart.title = "Stevec vode - zadnje stanje [m3]"
-    data_in = data_tools.get_last_readings("water")
+    data_in = data_tools.get_last_readings(data_tools.get_sensor_ids("water"))
     legend = []
     data = []
     for d in data_in:

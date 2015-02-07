@@ -7,7 +7,8 @@
     {% else %}
         <title>Delilniki</title>
     {% endif %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='show.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename=data.css) }}">
+<script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
 </head>
 
 
@@ -20,11 +21,13 @@
         {% endfor %}
       {% endif %}
 {% endwith %}
+<span id="date_time" style="float: right;"></span>
 <div>{{ data.title }}:
     <a href="/index">Domov</a>&nbsp;|&nbsp;
     <a href="/value_input">Value Input</a>&nbsp;|&nbsp;
     <a href="/show">Show</a>
 </div>
+<script type="text/javascript">window.onload = date_time('date_time');</script>
 <hr>
 {% block content %}{% endblock %}
 </body>

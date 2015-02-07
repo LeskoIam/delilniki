@@ -23,37 +23,43 @@ def value_input():
         # Kuhinja
         sensor_id_kuhinja = Sensor.query.filter_by(location="kuhinja", type="delilnik").first()
         timestamp = datetime.datetime.utcnow()
-        data = SensorData(timestamp, form.kuhinja.data, None, sensor_id_kuhinja.id)
-        db.session.add(data)
+        if form.kuhinja.data is not None:
+            data = SensorData(timestamp, form.kuhinja.data, None, sensor_id_kuhinja.id)
+            db.session.add(data)
 
         # Hodnik
         sensor_id_hodnik = Sensor.query.filter_by(location="hodnik", type="delilnik").first()
-        data = SensorData(timestamp, form.hodnik.data, None, sensor_id_hodnik.id)
-        db.session.add(data)
+        if form.hodnik.data is not None:
+            data = SensorData(timestamp, form.hodnik.data, None, sensor_id_hodnik.id)
+            db.session.add(data)
 
         # Kopalnica
         sensor_id_kopalnica = Sensor.query.filter_by(location="kopalnica", type="delilnik").first()
-        data = SensorData(timestamp, form.kopalnica.data, None, sensor_id_kopalnica.id)
-        db.session.add(data)
+        if form.kopalnica.data is not None:
+            data = SensorData(timestamp, form.kopalnica.data, None, sensor_id_kopalnica.id)
+            db.session.add(data)
 
         # Soba
         sensor_id_soba = Sensor.query.filter_by(location="soba", type="delilnik").first()
-        data = SensorData(timestamp, form.soba.data, None, sensor_id_soba.id)
-        db.session.add(data)
+        if form.soba.data is not None:
+            data = SensorData(timestamp, form.soba.data, None, sensor_id_soba.id)
+            db.session.add(data)
 
         # Topla voda
         sensor_id_topla_voda = Sensor.query.filter_by(location="hodnik",
                                                       type="merilna ura",
                                                       name="topla voda").first()
-        data = SensorData(timestamp, form.topla_voda.data, "m3", sensor_id_topla_voda.id)
-        db.session.add(data)
+        if form.topla_voda.data is not None:
+            data = SensorData(timestamp, form.topla_voda.data, "m3", sensor_id_topla_voda.id)
+            db.session.add(data)
 
         # Hladna voda
         sensor_id_hladna_voda = Sensor.query.filter_by(location="hodnik",
                                                        type="merilna ura",
                                                        name="hladna voda").first()
-        data = SensorData(timestamp, form.hladna_voda.data, "m3", sensor_id_hladna_voda.id)
-        db.session.add(data)
+        if form.hladna_voda.data is not None:
+            data = SensorData(timestamp, form.hladna_voda.data, "m3", sensor_id_hladna_voda.id)
+            db.session.add(data)
 
         db.session.commit()
         flash("Uspesno ste vnesli podatke!")
@@ -74,14 +80,33 @@ def show():
             "plot_heat_dividers": plot_tools.plot_last_heat_dividers(),
             "plot_water_counter": plot_tools.plot_last_water_counter(),
             "plot_heat_consumption": plot_tools.plot_heat_consumption(),
-            "plot_water_consumption": plot_tools.plot_water_consumption()}
+            "plot_water_consumption": plot_tools.plot_water_consumption(),
+            "css": "show.css"}
     return render_template('show.html',
                            data=data,
                            sensor_data=sensor_data)
 
 
+@app.route("/showMk2")
+def showMk2():
+    sensor_data = db.session.query(SensorData, Sensor).join(Sensor).\
+        order_by(SensorData.timestamp.desc()).order_by(Sensor.type).limit(18)
+    # print sensor_data[0][0].timestamp
+    data = {"title": title_handler("Show All"),
+            "plot_heat": plot_tools.plot_heat(),
+            "plot_water": plot_tools.plot_water(),
+            "plot_heat_dividers": plot_tools.plot_last_heat_dividers(),
+            "plot_water_counter": plot_tools.plot_last_water_counter(),
+            "plot_heat_consumption": plot_tools.plot_heat_consumption(),
+            "plot_water_consumption": plot_tools.plot_water_consumption(),
+            "css": "showMk2.css"}
+    return render_template('showMk2.html',
+                           data=data,
+                           sensor_data=sensor_data)
+
 #########################################################
 #########################################################
+
 
 def title_handler(subtitle=None):
     main = "Delilniki"

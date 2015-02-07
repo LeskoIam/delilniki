@@ -1,0 +1,17 @@
+#main_table {
+    width: 100%;
+    /*border: ridge black;*/
+}
+
+td {
+    vertical-align: top;
+}
+
+#plot {
+    border: ridge black;
+    padding: 10px;
+}
+
+#u_left {
+    background-color: cornsilk;
+}

@@ -1,5 +1,5 @@
 __author__ = 'Lesko'
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, Markup
 from app import app, db
 from forms import MeasurePointsForm
 from models import SensorData, Sensor
@@ -9,7 +9,6 @@ import common.data_tools as data_tools
 import config
 import os
 import markdown
-from flask import Markup
 
 @app.route('/')
 @app.route('/index')
@@ -81,24 +80,6 @@ def value_input():
                            data=data)
 
 
-@app.route("/show")
-def show():
-    sensor_data = db.session.query(SensorData, Sensor).join(Sensor).\
-        order_by(SensorData.timestamp.desc()).order_by(Sensor.type).limit(18)
-    # print sensor_data[0][0].timestamp
-    data = {"title": title_handler("Show All"),
-            "plot_heat": plot_tools.plot_heat(),
-            "plot_water": plot_tools.plot_water(),
-            "plot_heat_dividers": plot_tools.plot_last_heat_dividers(),
-            "plot_water_counter": plot_tools.plot_last_water_counter(),
-            "plot_heat_consumption": plot_tools.plot_heat_consumption(),
-            "plot_water_consumption": plot_tools.plot_water_consumption(),
-            "css": "show.css"}
-    return render_template('show.html',
-                           data=data,
-                           sensor_data=sensor_data)
-
-
 @app.route("/showMk2")
 def showMk2():
     sensor_data = db.session.query(SensorData, Sensor).join(Sensor).\
@@ -119,8 +100,8 @@ def showMk2():
             "predict_month_heat_consumption": data_tools.get_predicted_month_consumption("heat"),
             "predict_month_water_consumption": data_tools.get_predicted_month_consumption("water"),
 
-            "css": "showMk2.css"}
-    return render_template('showMk2.html',
+            "css": "show.css"}
+    return render_template('show.html',
                            data=data,
                            sensor_data=sensor_data)
 

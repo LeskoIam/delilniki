@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-    <div id="tabela">
-        <table border="1">
+<table id="main_table">
+    <tr id="upper">
+        <td id="u_left">
+            <table border="1">
         <tr>
             <th>id</th>
             <th>datetime</th>
@@ -24,23 +26,33 @@
                 <td>{{ sensor.location }}</td>
             {% endfor %}
         </table>
-    <div id="plots_left">
-        {{ data.plot_heat_consumption|safe }}
-        {{ data.plot_water_consumption|safe }}
-    </div>
-    </div>
-    <div id="plots_right">
-        <div id="plot">
-            {{ data.plot_heat_dividers|safe }}
-        </div>
-        <div id="plot">
-            {{ data.plot_water_counter|safe }}
-        </div>
-        <div id="plot">
-            {{ data.plot_heat|safe }}
-        </div>
-        <div id="plot">
-            {{ data.plot_water|safe }}
-        </div>
-    </div>
+        </td>
+        <td id="u_right">
+            {% block water %}
+                {% include "out_info_current_month.html" %}
+            {% endblock %}
+        </td>
+    </tr>
+    <tr id="bottom">
+        <td id="b_left">
+            {{ data.plot_heat_consumption|safe }}
+            {{ data.plot_water_consumption|safe }}
+        </td>
+
+        <td id="b_right">
+            <div id="plot">
+                {{ data.plot_heat_dividers|safe }}
+            </div>
+            <div id="plot">
+                {{ data.plot_water_counter|safe }}
+            </div>
+            <div id="plot">
+                {{ data.plot_heat|safe }}
+            </div>
+            <div id="plot">
+                {{ data.plot_water|safe }}
+            </div>
+        </td>
+    </tr>
+</table>
 {% endblock %}

@@ -1,17 +1,17 @@
-#tabela {
-    width: 50%;
-    float: left;
-}
-#plots_right {
-    margin-left: 50%;
+#main_table {
+    width: 100%;
+    /*border: ridge black;*/
 }
 
-#plots_left {
-    width: 98%;
-    padding-top: 15px;
+td {
+    vertical-align: top;
 }
 
 #plot {
     border: ridge black;
-    padding: 15px;
+    padding: 10px;
 }
+
+/*#u_left {*/
+    /*background-color: cornsilk;*/
+/*}*/

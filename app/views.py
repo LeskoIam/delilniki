@@ -84,7 +84,6 @@ def value_input():
 def show():
     sensor_data = db.session.query(SensorData, Sensor).join(Sensor).\
         order_by(SensorData.timestamp.desc()).order_by(Sensor.type).limit(18)
-    # print sensor_data[0][0].timestamp
     data = {"title": title_handler("Show All"),
 
             "plot_heat": plot_tools.plot_heat(),

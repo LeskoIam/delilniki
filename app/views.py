@@ -86,6 +86,7 @@ def show():
         order_by(SensorData.timestamp.desc()).order_by(Sensor.type).limit(18)
     # print sensor_data[0][0].timestamp
     data = {"title": title_handler("Show All"),
+
             "plot_heat": plot_tools.plot_heat(),
             "plot_water": plot_tools.plot_water(),
             "plot_heat_dividers": plot_tools.plot_last_heat_dividers(),

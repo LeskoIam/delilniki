@@ -85,7 +85,8 @@ def get_ndays_back_mean(heat_or_water, n_days):
         out = db.session.query(SensorData.timestamp, SensorData.value). \
             filter(SensorData.timestamp >= end_date). \
             filter(SensorData.timestamp <= start_date).\
-            filter(SensorData.sensor_id == s_id)
+            filter(SensorData.sensor_id == s_id).\
+            order_by(SensorData.timestamp.desc())
         out = out.all()
         data = [x[1] for x in out]
         time_delta = [x[0] for x in out]

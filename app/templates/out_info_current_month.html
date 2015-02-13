@@ -19,9 +19,13 @@
             <td title="Poraba prejšnji mesec">{{ data.previous_month_heat_consumption[d] }}</td>
 
             {% if data.predict_month_heat_consumption[d] < data.previous_month_heat_consumption[d] %}
-                <td title="Trend - poraba bo manjšsa kot prejšnji mesec" bgcolor="#adff2f">{{ data.predict_month_heat_consumption[d] - data.previous_month_heat_consumption[d] }}</td>
+                <td title="Trend - poraba bo manjšsa kot prejšnji mesec" bgcolor="#adff2f">
+                    {{ "%i"| format(data.predict_month_heat_consumption[d] - data.previous_month_heat_consumption[d]|float) }}
+                </td>
             {% elif data.predict_month_heat_consumption[d] > data.previous_month_heat_consumption[d] %}
-                <td title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">+{{ data.predict_month_heat_consumption[d] - data.previous_month_heat_consumption[d] }}</td>
+                <td title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
+                    {{ "+%i"| format(data.predict_month_heat_consumption[d] - data.previous_month_heat_consumption[d]|float) }}
+                </td>
             {% else %}
                 <td title="Trend" bgcolor="#00bfff">0</td>
             {% endif %}
@@ -37,9 +41,13 @@
             <td title="Poraba prejšnji mesec">{{ data.previous_month_water_consumption[d] }}</td>
         
             {% if data.predict_month_water_consumption[d] < data.previous_month_water_consumption[d] %}
-                <td title="Trend - poraba bo manjšsa kot prejšnji mesec" bgcolor="#adff2f">{{ data.predict_month_water_consumption[d] - data.previous_month_water_consumption[d] }}</td>
+                <td title="Trend - poraba bo manjšsa kot prejšnji mesec" bgcolor="#adff2f">
+                    {{ "%0.3f"| format(data.predict_month_water_consumption[d] - data.previous_month_water_consumption[d]|float) }}
+                </td>
             {% elif data.predict_month_water_consumption[d] > data.previous_month_water_consumption[d] %}
-                <td title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">+{{ data.predict_month_water_consumption[d] - data.previous_month_water_consumption[d] }}</td>
+                <td title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
+                    {{ "+%0.3f"| format(data.predict_month_water_consumption[d] - data.previous_month_water_consumption[d]|float) }}
+                </td>
             {% else %}
                 <td title="Trend" bgcolor="#00bfff">0</td>
             {% endif %}

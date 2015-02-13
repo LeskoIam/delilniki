@@ -28,9 +28,15 @@
         </table>
         </td>
         <td id="u_right">
-            U_RIGHT<br>
-            INFO<br>
             Poraba v tem mesecu:
+            <table>
+            {% for d in data.month_heat_consumption.keys() %}
+                <tr>
+                    <td>{{ d.capitalize() + ":" }}</td>
+                    <td>{{ data.month_heat_consumption[d] }}</td>
+                </tr>
+            {% endfor %}
+            </table>
 
         </td>
     </tr>

@@ -37,9 +37,17 @@ if __name__ == '__main__':
     #     filter(models.Sensor.name == "topla voda").\
     #     filter(models.SensorData.timestamp >= search_date).\
     #     order_by(models.SensorData.timestamp.asc())
-    #
-    # print out.all()
-    # for a in out.all():
-    #     print a
-    # print "----------"
+
+    import datetime
+    start_of_month = datetime.date(datetime.datetime.today().year, datetime.datetime.today().month, 1)
+    print start_of_month
+    out = db.session.query(db.func.max(models.SensorData.value) - db.func.min(models.SensorData.value)).\
+        filter(models.SensorData.timestamp >= start_of_month).\
+        filter(models.SensorData.sensor_id == 4).\
+        order_by(models.SensorData.timestamp.desc())
+
+    print out
+    for a in out.all():
+        print a
+    print "----------"
     pass

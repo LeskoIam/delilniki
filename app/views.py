@@ -6,12 +6,23 @@ from models import SensorData, Sensor
 import datetime
 import common.plot_tools as plot_tools
 import common.data_tools as data_tools
-
+import config
+import os
+import markdown
+from flask import Markup
 
 @app.route('/')
 @app.route('/index')
 def index():
-    data = {"title": title_handler()}
+    try:
+        f = open(os.path.join(config.APP_ROOT, "README.md"), "r")
+        text = f.read()
+        text = Markup(markdown.markdown(text))
+        f.close()
+    except IOError:
+        text = "Failed to load page content. Sorry..."
+    data = {"title": title_handler(),
+            "content": text}
     return render_template("index.html",
                            data=data)
 

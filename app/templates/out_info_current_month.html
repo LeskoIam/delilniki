@@ -6,15 +6,16 @@
     <tr>
         <td><b>Lokacija</b></td>
         <td><b>Trenutna p.</b></td>
-        <td><b>Poraba prejšnji m.</b></td>
         <td><b>Napovedana poraba*</b></td>
+        <td><b>Poraba prejšnji m.</b></td>
+        <tr><td>&nbsp;</td></tr>
     </tr>
     {% for d in data.month_heat_consumption.keys() %}
         <tr>
             <td>{{ d.capitalize() }}</td>
             <td>{{ data.month_heat_consumption[d]}}</td>
-            <td>{{ data.previous_month_heat_consumption[d] }}</td>
             <td>{{ data.predict_month_heat_consumption[d] }}</td>
+            <td>{{ data.previous_month_heat_consumption[d] }}</td>
         </tr>
     {% endfor %}
     <tr><td><hr></td></tr>
@@ -23,9 +24,11 @@
         <tr>
             <td>{{ d.capitalize() }}</td>
             <td>{{ data.month_water_consumption[d]}}</td>
-            <td>{{ data.previous_month_water_consumption[d] }}</td>
             <td>{{ data.predict_month_water_consumption[d] }}</td>
+            <td>{{ data.previous_month_water_consumption[d] }}</td>
         </tr>
     {% endfor %}
 </table>
+<br>
+<b>*</b> <span style="font-size: 12px">Napovedana poraba glede na povprečno porabo v obdobju zadnjih 30 dni.</span>
 </div>

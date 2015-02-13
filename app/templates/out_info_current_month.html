@@ -4,26 +4,26 @@
     <tr><td><hr></td></tr>
     <tr><td><h3>Ogrevanje [enot]</h3></td></tr>
     <tr>
-        <td><b>Lokacija</b></td>
-        <td><b>Trenutna p.</b></td>
-        <td><b>Napovedana poraba*</b></td>
-        <td><b>Poraba prejšnji m.</b></td>
-        <td><b>Trend</b></td>
+        <td title="Lokacija"><b>Lokacija</b></td>
+        <td title="Trenutna poraba"><b>Trenutna p.</b></td>
+        <td title="Napovedana poraba"><b>Napovedana poraba*</b></td>
+        <td title="Poraba prejšnji mesec"><b>Poraba pr. m.</b></td>
+        <td title="Trend"><b>Trend</b></td>
         <tr><td>&nbsp;</td></tr>
     </tr>
     {% for d in data.month_heat_consumption.keys() %}
         <tr>
-            <td>{{ d.capitalize() }}</td>
-            <td>{{ data.month_heat_consumption[d]}}</td>
-            <td>{{ data.predict_month_heat_consumption[d] }}</td>
-            <td>{{ data.previous_month_heat_consumption[d] }}</td>
+            <td title="Lokacija">{{ d.capitalize() }}</td>
+            <td title="Trenutna poraba">{{ data.month_heat_consumption[d]}}</td>
+            <td title="Napovedana poraba">{{ data.predict_month_heat_consumption[d] }}</td>
+            <td title="Poraba prejšnji mesec">{{ data.previous_month_heat_consumption[d] }}</td>
 
             {% if data.predict_month_heat_consumption[d] < data.previous_month_heat_consumption[d] %}
-                <td bgcolor="#adff2f">{{ data.predict_month_heat_consumption[d] - data.previous_month_heat_consumption[d] }}</td>
+                <td title="Trend - poraba bo manjšsa kot prejšnji mesec" bgcolor="#adff2f">{{ data.predict_month_heat_consumption[d] - data.previous_month_heat_consumption[d] }}</td>
             {% elif data.predict_month_heat_consumption[d] > data.previous_month_heat_consumption[d] %}
-                <td bgcolor="red">+{{ data.predict_month_heat_consumption[d] - data.previous_month_heat_consumption[d] }}</td>
+                <td title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">+{{ data.predict_month_heat_consumption[d] - data.previous_month_heat_consumption[d] }}</td>
             {% else %}
-                <td bgcolor="#00bfff">0</td>
+                <td title="Trend" bgcolor="#00bfff">0</td>
             {% endif %}
         </tr>
     {% endfor %}
@@ -31,17 +31,17 @@
     <tr><td><h3>Voda [m3]</h3></td></tr>
     {% for d in data.month_water_consumption.keys() %}
         <tr>
-            <td>{{ d.capitalize() }}</td>
-            <td>{{ data.month_water_consumption[d]}}</td>
-            <td>{{ data.predict_month_water_consumption[d] }}</td>
-            <td>{{ data.previous_month_water_consumption[d] }}</td>
+            <td title="Topla/Hladna">{{ d.capitalize() }}</td>
+            <td title="Trenutna poraba">{{ data.month_water_consumption[d]}}</td>
+            <td title="Napovedana poraba">{{ data.predict_month_water_consumption[d] }}</td>
+            <td title="Poraba prejšnji mesec">{{ data.previous_month_water_consumption[d] }}</td>
         
             {% if data.predict_month_water_consumption[d] < data.previous_month_water_consumption[d] %}
-                <td bgcolor="#adff2f">{{ data.predict_month_water_consumption[d] - data.previous_month_water_consumption[d] }}</td>
+                <td title="Trend - poraba bo manjšsa kot prejšnji mesec" bgcolor="#adff2f">{{ data.predict_month_water_consumption[d] - data.previous_month_water_consumption[d] }}</td>
             {% elif data.predict_month_water_consumption[d] > data.previous_month_water_consumption[d] %}
-                <td bgcolor="red">+{{ data.predict_month_water_consumption[d] - data.previous_month_water_consumption[d] }}</td>
+                <td title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">+{{ data.predict_month_water_consumption[d] - data.previous_month_water_consumption[d] }}</td>
             {% else %}
-                <td bgcolor="#00bfff">0</td>
+                <td title="Trend" bgcolor="#00bfff">0</td>
             {% endif %}
         </tr>
     {% endfor %}

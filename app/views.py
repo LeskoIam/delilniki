@@ -80,12 +80,12 @@ def value_input():
                            data=data)
 
 
-@app.route("/showMk2")
-def showMk2():
+@app.route("/show")
+def show():
     sensor_data = db.session.query(SensorData, Sensor).join(Sensor).\
         order_by(SensorData.timestamp.desc()).order_by(Sensor.type).limit(18)
     # print sensor_data[0][0].timestamp
-    data = {"title": title_handler("Show All Mk2"),
+    data = {"title": title_handler("Show All"),
             "plot_heat": plot_tools.plot_heat(),
             "plot_water": plot_tools.plot_water(),
             "plot_heat_dividers": plot_tools.plot_last_heat_dividers(),

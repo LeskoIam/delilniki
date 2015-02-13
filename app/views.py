@@ -100,8 +100,14 @@ def showMk2():
             "plot_water_counter": plot_tools.plot_last_water_counter(),
             "plot_heat_consumption": plot_tools.plot_heat_consumption(),
             "plot_water_consumption": plot_tools.plot_water_consumption(),
+
             "month_water_consumption": data_tools.get_this_month_consumption("water"),
             "month_heat_consumption": data_tools.get_this_month_consumption("heat"),
+            "previous_month_water_consumption": data_tools.get_previous_month_consumption("water"),
+            "previous_month_heat_consumption": data_tools.get_previous_month_consumption("heat"),
+            "predict_month_heat_consumption": data_tools.get_predicted_month_consumption("heat"),
+            "predict_month_water_consumption": data_tools.get_predicted_month_consumption("water"),
+
             "css": "showMk2.css"}
     return render_template('showMk2.html',
                            data=data,

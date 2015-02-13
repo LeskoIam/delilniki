@@ -28,16 +28,9 @@
         </table>
         </td>
         <td id="u_right">
-            Poraba v tem mesecu:
-            <table>
-            {% for d in data.month_heat_consumption.keys() %}
-                <tr>
-                    <td>{{ d.capitalize() + ":" }}</td>
-                    <td>{{ data.month_heat_consumption[d] }}</td>
-                </tr>
-            {% endfor %}
-            </table>
-
+            {% block water %}
+                {% include "out_info_current_month.html" %}
+            {% endblock %}
         </td>
     </tr>
     <tr id="bottom">

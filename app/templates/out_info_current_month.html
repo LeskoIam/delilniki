@@ -1,0 +1,31 @@
+<div>
+<h2>Poraba v tem mesecu:</h2>
+<table border="0">
+    <tr><td><hr></td></tr>
+    <tr><td><h3>Ogrevanje [enot]</h3></td></tr>
+    <tr>
+        <td><b>Lokacija</b></td>
+        <td><b>Trenutna p.</b></td>
+        <td><b>Poraba prejšnji m.</b></td>
+        <td><b>Napovedana poraba*</b></td>
+    </tr>
+    {% for d in data.month_heat_consumption.keys() %}
+        <tr>
+            <td>{{ d.capitalize() }}</td>
+            <td>{{ data.month_heat_consumption[d]}}</td>
+            <td>{{ data.previous_month_heat_consumption[d] }}</td>
+            <td>{{ data.predict_month_heat_consumption[d] }}</td>
+        </tr>
+    {% endfor %}
+    <tr><td><hr></td></tr>
+    <tr><td><h3>Voda [m3]</h3></td></tr>
+    {% for d in data.month_water_consumption.keys() %}
+        <tr>
+            <td>{{ d.capitalize() }}</td>
+            <td>{{ data.month_water_consumption[d]}}</td>
+            <td>{{ data.previous_month_water_consumption[d] }}</td>
+            <td>{{ data.predict_month_water_consumption[d] }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</div>

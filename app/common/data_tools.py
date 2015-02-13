@@ -3,11 +3,13 @@ from app import db
 from app.models import SensorData, Sensor
 from sqlalchemy import distinct
 import datetime
+import calendar
+import num_tools
 
 
 # def get_last_readings(heat_or_water):
 # heat = False
-#     if heat_or_water.lower() == "heat":
+# if heat_or_water.lower() == "heat":
 #         s_type = "delilnik"
 #         heat = True
 #     elif heat_or_water.lower() == "water":
@@ -92,6 +94,37 @@ def get_last_readings(sensor_ids):
     return d
 
 
+def get_ndays_back_mean(heat_or_water, n_days):
+    s_ids = get_sensor_ids(heat_or_water)
+    start_date = datetime.datetime.today()
+    date_object = datetime.timedelta(days=n_days)
+    end_date = start_date - date_object
+    d = {}
+    for s_id in s_ids:
+        location = get_sensor_location(s_id)
+        s_name = get_sensor_name(s_id)
+        out = db.session.query(SensorData.timestamp, SensorData.value). \
+            filter(SensorData.timestamp >= end_date). \
+            filter(SensorData.timestamp <= start_date).\
+            filter(SensorData.sensor_id == s_id)
+        out = out.all()
+        # print "#########################"
+        # print location
+        # print consumption
+        data = [x[1] for x in out]
+        time_delta = [x[0] for x in out]
+        # print "data", data
+        # print time_delta
+        data, _, dt = num_tools.running_consumption(data, time_delta)
+        data = num_tools.mean(data)
+        # print "mean poraba", data
+        if heat_or_water == "heat":
+            d[location] = data
+        else:
+            d[s_name] = data
+    return d
+
+
 def get_this_month_consumption(heat_or_water):
     s_ids = get_sensor_ids(heat_or_water)
     start_of_month = datetime.date(datetime.datetime.today().year,
@@ -105,6 +138,69 @@ def get_this_month_consumption(heat_or_water):
         s_name = get_sensor_name(s_id)
         out = db.session.query(db.func.max(SensorData.value) - db.func.min(SensorData.value)). \
             filter(SensorData.timestamp >= start_of_month). \
+            filter(SensorData.sensor_id == s_id). \
+            order_by(SensorData.timestamp.desc())
+        consumption = out.all()[0][0]
+        # print "#########################"
+        # print location
+        # print s_type
+        # print consumption
+        if heat_or_water == "heat":
+            d[location] = consumption
+        else:
+            d[s_name] = consumption
+    return d
+
+
+def get_predicted_month_consumption(heat_or_water):
+    data = get_ndays_back_mean(heat_or_water, 30)
+    used = get_this_month_consumption(heat_or_water)
+    out = {}
+    for d in data:
+        already_used = used[d]
+        consumption_rate = data[d]
+        month = datetime.datetime.today().month
+        month_days = calendar.monthrange(datetime.datetime.today().year, month)[1]
+        today = datetime.datetime.today().day
+        predict = (consumption_rate * (month_days - today)) + already_used
+        # print d
+        # print "consumption_rate", consumption_rate
+        # print "month_days", month_days
+        # print "today", today
+        # print "already_used", already_used
+        # print "predict", predict
+        if "heat" in heat_or_water:
+            out[d] = int(round(predict))
+        else:
+            out[d] = round(predict, 3)
+    return out
+
+
+def get_previous_month_consumption(heat_or_water):
+    s_ids = get_sensor_ids(heat_or_water)
+    month = datetime.datetime.today().month
+    month -= 1
+    year = datetime.datetime.today().year
+    if month < 1:
+        month = 12
+        year -= 1
+    start_of_month = datetime.date(year,
+                                   month,
+                                   1)
+    # print start_of_month
+    end_of_month = datetime.date(datetime.datetime.today().year,
+                                 month,
+                                 calendar.monthrange(datetime.datetime.today().year,
+                                                     month)[1])
+    # print end_of_month
+    # print s_ids
+    d = {}
+    for s_id in s_ids:
+        location = get_sensor_location(s_id)
+        s_name = get_sensor_name(s_id)
+        out = db.session.query(db.func.max(SensorData.value) - db.func.min(SensorData.value)). \
+            filter(SensorData.timestamp >= start_of_month). \
+            filter(SensorData.timestamp <= end_of_month).\
             filter(SensorData.sensor_id == s_id). \
             order_by(SensorData.timestamp.desc())
         consumption = out.all()[0][0]
@@ -139,4 +235,28 @@ if __name__ == '__main__':
 
     print """\na = get_this_month_consumption("water")"""
     a = get_this_month_consumption("water")
+    print a
+
+    print """\na = get_previous_month_consumption("water")"""
+    a = get_previous_month_consumption("water")
+    print a
+
+    print """\na = get_previous_month_consumption("heat")"""
+    a = get_previous_month_consumption("heat")
+    print a
+
+    print """\na = get_ndays_back_mean("heat", 30)"""
+    a = get_ndays_back_mean("heat", 30)
+    print a
+
+    print """\na = get_ndays_back_mean("water", 30)"""
+    a = get_ndays_back_mean("water", 30)
+    print a
+
+    print """\na = get_predicted_month_consumption("heat")"""
+    a = get_predicted_month_consumption("heat")
+    print a
+
+    print """\na = get_predicted_month_consumption("water")"""
+    a = get_predicted_month_consumption("water")
     print a

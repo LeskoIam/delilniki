@@ -14,45 +14,59 @@
     {% for d in data.month_heat_consumption.keys() %}
         <tr>
             <td title="Lokacija">{{ d.capitalize() }}</td>
-            <td title="Trenutna poraba">{{ data.month_heat_consumption[d]}}</td>
-            <td title="Napovedana poraba">{{ "%0.3f"| format(data.trend_heat[d]["prediction"]|float) }}</td>
+            <td id="center_td" title="Trenutna poraba">{{ data.month_heat_consumption[d]}}</td>
+            <td id="center_td" title="Napovedana poraba">{{ "%0.3f"| format(data.trend_heat[d]["prediction"]|float) }}</td>
 
             {% if data.trend_heat[d]["trend"] < 0 %}
-                <td title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
+                <td id="center_td" title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
                     {{ "%0.2f"| format(data.trend_heat[d]["trend"]|float) }}
                 </td>
             {% elif data.trend_heat[d]["trend"] > 0 %}
-                <td title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
+                <td id="center_td" title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
                     {{ "+%0.2f"| format(data.trend_heat[d]["trend"]|float) }}
                 </td>
             {% else %}
-                <td title="Trend" bgcolor="#00bfff">0</td>
+                <td id="center_td" title="Trend" bgcolor="#00bfff">0</td>
             {% endif %}
-            <td title="Poraba prejšnji mesec">{{ data.previous_month_heat_consumption[d] }}</td>
+            <td id="center_td" title="Poraba prejšnji mesec">{{ data.previous_month_heat_consumption[d] }}</td>
         </tr>
     {% endfor %}
+    <tr>
+        <td>Sum</td>
+        <td id="center_td">{{ data.sum_month_heat }}</td>
+        <td id="center_td">{{ "%0.3f"| format(data.sum_predict_heat|float) }}</td>
+        <td>&nbsp;</td>
+        <td id="center_td">{{ data.sum_last_heat }}</td>
+    </tr>
     <tr><td><hr></td></tr>
     <tr><td><h3>Voda [m3]</h3></td></tr>
     {% for d in data.month_water_consumption.keys() %}
         <tr>
             <td title="Topla/Hladna">{{ d.capitalize() }}</td>
-            <td title="Trenutna poraba">{{ data.month_water_consumption[d]}}</td>
-            <td title="Napovedana poraba">{{ "%0.3f"| format(data.trend_water[d]["prediction"]|float) }}</td>
-        
+            <td id="center_td" title="Trenutna poraba">{{ data.month_water_consumption[d]}}</td>
+            <td id="center_td" title="Napovedana poraba">{{ "%0.3f"| format(data.trend_water[d]["prediction"]|float) }}</td>
+
             {% if data.trend_water[d]["trend"] < 0 %}
-                <td title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
+                <td id="center_td" title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
                     {{ "%0.3f"| format(data.trend_water[d]["trend"]|float) }}
                 </td>
             {% elif data.trend_water[d]["trend"] > 0 %}
-                <td title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
+                <td id="center_td" title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
                     {{ "+%0.3f"| format(data.trend_water[d]["trend"]|float) }}
                 </td>
             {% else %}
-                <td title="Trend" bgcolor="#00bfff">0</td>
+                <td id="center_td" title="Trend" bgcolor="#00bfff">0</td>
             {% endif %}
-        <td title="Poraba prejšnji mesec">{{ data.previous_month_water_consumption[d] }}</td>
+        <td id="center_td" title="Poraba prejšnji mesec">{{ data.previous_month_water_consumption[d] }}</td>
         </tr>
     {% endfor %}
+    <tr>
+        <td>Sum</td>
+        <td id="center_td">{{ "%0.3f"| format(data.sum_month_water|float) }}</td>
+        <td id="center_td">{{ "%0.3f"| format(data.sum_predict_water|float) }}</td>
+        <td>&nbsp;</td>
+        <td id="center_td">{{ "%0.3f"| format(data.sum_last_water|float) }}</td>
+    </tr>
 </table>
 <br>
     <span style="font-size: 25px"><b>*</b></span>

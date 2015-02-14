@@ -88,6 +88,12 @@ def value_input():
 def show():
     sensor_data = db.session.query(SensorData, Sensor).join(Sensor).\
         order_by(SensorData.timestamp.desc()).order_by(Sensor.type).limit(18)
+    month_water_consumption = data_tools.get_this_month_consumption("water")
+    month_heat_consumption = data_tools.get_this_month_consumption("heat")
+    trend_heat = data_tools.get_trends("heat")
+    trend_water = data_tools.get_trends("water")
+    previous_month_water = data_tools.get_previous_month_consumption("water")
+    previous_month_heat = data_tools.get_previous_month_consumption("heat")
     data = {"title": title_handler("Show All"),
 
             "plot_heat": plot_tools.plot_heat(),
@@ -97,14 +103,20 @@ def show():
             "plot_heat_consumption": plot_tools.plot_heat_consumption(),
             "plot_water_consumption": plot_tools.plot_water_consumption(),
 
-            "month_water_consumption": data_tools.get_this_month_consumption("water"),
-            "month_heat_consumption": data_tools.get_this_month_consumption("heat"),
-            "previous_month_water_consumption": data_tools.get_previous_month_consumption("water"),
-            "previous_month_heat_consumption": data_tools.get_previous_month_consumption("heat"),
+            "month_water_consumption": month_water_consumption,
+            "month_heat_consumption": month_heat_consumption,
+            "previous_month_water_consumption": previous_month_water,
+            "previous_month_heat_consumption": previous_month_heat,
             # "predict_month_heat_consumption": data_tools.get_predicted_month_consumption("heat"),
             # "predict_month_water_consumption": data_tools.get_predicted_month_consumption("water"),
-            "trend_heat": data_tools.get_trends("heat"),
-            "trend_water": data_tools.get_trends("water"),
+            "trend_heat": trend_heat,
+            "trend_water": trend_water,
+            "sum_month_heat": sum([x for x in month_heat_consumption.values()]),
+            "sum_month_water": sum([x for x in month_water_consumption.values()]),
+            "sum_predict_water": sum([x["prediction"] for x in trend_water.values()]),
+            "sum_predict_heat": sum([x["prediction"] for x in trend_heat.values()]),
+            "sum_last_water": sum([x for x in previous_month_water.values()]),
+            "sum_last_heat": sum([x for x in previous_month_heat.values()]),
 
             "css": "show.css"}
     return render_template('show.html',

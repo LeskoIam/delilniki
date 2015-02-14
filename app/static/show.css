@@ -12,6 +12,6 @@ td {
     padding: 10px;
 }
 
-/*#u_left {*/
-    /*background-color: cornsilk;*/
-/*}*/
+#center_td {
+    text-align: center;
+}

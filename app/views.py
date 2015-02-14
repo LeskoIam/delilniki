@@ -101,13 +101,20 @@ def show():
             "month_heat_consumption": data_tools.get_this_month_consumption("heat"),
             "previous_month_water_consumption": data_tools.get_previous_month_consumption("water"),
             "previous_month_heat_consumption": data_tools.get_previous_month_consumption("heat"),
-            "predict_month_heat_consumption": data_tools.get_predicted_month_consumption("heat"),
-            "predict_month_water_consumption": data_tools.get_predicted_month_consumption("water"),
+            # "predict_month_heat_consumption": data_tools.get_predicted_month_consumption("heat"),
+            # "predict_month_water_consumption": data_tools.get_predicted_month_consumption("water"),
+            "trend_heat": data_tools.get_trends("heat"),
+            "trend_water": data_tools.get_trends("water"),
 
             "css": "show.css"}
     return render_template('show.html',
                            data=data,
                            sensor_data=sensor_data)
+@app.route("/more")
+def more():
+    data = {"title": title_handler("More")}
+    return render_template('more.html',
+                           data=data)
 
 #########################################################
 #########################################################

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+    <button onclick="goBack()">Back</button>
+    <hr>
+    <p>
+        <h3>Trenutna poraba</h3>
+        Poraba od začetka tekočega meseca do danes.
+    </p>
+    <hr>
+    <p>
+        <h3>*Napovedana poraba in **Trend</h3>
+        <h4>**Napovedana poraba</h4>
+        Napovedana poraba (P) je izračunana glede na povprečno porabo v prejšnjem mesecu.<br>
+
+        <h4>**Trend</h4>
+        Trend (T) prikazuje ali se poraba, glede na korigirano vrednost porabe iz prejšnjega meseca, zmanjšuje oz. povečuje.<br>
+
+        <h4>Izračun</h4>
+        a - poraba od začetka meseca do danes<br>
+        b - povprečna poraba prejšnjega meseca<br>
+        c - poraba za N dni nazaj od današnjega datuma. Ponavadi N = g<br>
+        d - napovedana poraba za preostale dni v mesecu<br>
+        e - preostanek dni v tem mesecu<br>
+        f - virtualna poraba prejšnjega meseca<br>
+        g - število dni v tekočem mesecu<br>
+        P - napovedana poraba za tekoči mesec<br>
+        T - trend<br>
+        <br>
+        d = c * e<br>
+        f = b * g<br>
+        <br>
+        T = (d + a) - f<br>
+        P = d + a
+    </p>
+    <hr>
+    <p><h4>Še več</h4>
+        <a href="https://github.com/LeskoIam/delilniki">https://github.com/LeskoIam/delilniki</a>
+    </p>
+    <hr>
+{% endblock %}

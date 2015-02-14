@@ -27,3 +27,8 @@ function date_time(id) {
     setTimeout('date_time("' + id + '");', 1000);
     return true;
 }
+
+function goBack()
+    {
+        window.history.back()
+    }

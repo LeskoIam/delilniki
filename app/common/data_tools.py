@@ -84,8 +84,8 @@ def get_ndays_back_mean(heat_or_water, n_days):
         s_name = get_sensor_name(s_id)
         out = db.session.query(SensorData.timestamp, SensorData.value). \
             filter(SensorData.timestamp >= end_date). \
-            filter(SensorData.timestamp <= start_date).\
-            filter(SensorData.sensor_id == s_id).\
+            filter(SensorData.timestamp <= start_date). \
+            filter(SensorData.sensor_id == s_id). \
             order_by(SensorData.timestamp.desc())
         out = out.all()
         data = [x[1] for x in out]
@@ -97,6 +97,75 @@ def get_ndays_back_mean(heat_or_water, n_days):
         else:
             d[s_name] = data
     return d
+
+
+def get_previous_month_mean_consumption(heat_or_water):
+    s_ids = get_sensor_ids(heat_or_water)
+
+    month = datetime.datetime.today().month
+    month -= 1
+    year = datetime.datetime.today().year
+    # If we are in January we must compensate and change month to December.
+    # And let's not forget to subtract one from year too :) !
+    if month < 1:
+        month = 12
+        year -= 1
+    start_of_month = datetime.date(year,
+                                   month,
+                                   1)
+    end_of_month = datetime.date(year,
+                                 month,
+                                 calendar.monthrange(year, month)[1])
+    d = {}
+    for s_id in s_ids:
+        location = get_sensor_location(s_id)
+        s_name = get_sensor_name(s_id)
+        out = db.session.query(SensorData.timestamp, SensorData.value). \
+            filter(SensorData.timestamp >= start_of_month). \
+            filter(SensorData.timestamp <= end_of_month). \
+            filter(SensorData.sensor_id == s_id). \
+            order_by(SensorData.timestamp.desc())
+        out = out.all()
+        data = [x[1] for x in out]
+        time_delta = [x[0] for x in out]
+        data, _, dt = num_tools.running_consumption(data, time_delta)
+        data = num_tools.mean(data)
+        if heat_or_water == "heat":
+            d[location] = data
+        else:
+            d[s_name] = data
+    return d
+
+
+def get_trends(heat_or_water, back_period=None):
+    if back_period is None:
+        month = datetime.datetime.today().month
+        back_period = calendar.monthrange(datetime.datetime.today().year, month)[1]
+
+    con_t_m = get_this_month_consumption(heat_or_water)
+    con_p_m_mean = get_previous_month_mean_consumption(heat_or_water)
+    ndays_back = get_ndays_back_mean(heat_or_water, back_period)
+    out = {}
+    for d in con_t_m:
+        # Calculate predicted consumption for days left in this month
+        cons_t_m_predicted = ndays_back[d] * (calendar.monthrange(
+            datetime.datetime.today().year,
+            datetime.datetime.today().month)[1] - datetime.datetime.today().day)
+
+        # Calculate virtual consumption for previous month compensated for this months number of days
+        con_p_m_virtual = con_p_m_mean[d] * calendar.monthrange(datetime.datetime.today().year,
+                                                                datetime.datetime.today().month)[1]
+        # print "\nLokacija:", d
+        # print "Consumption this month:", con_t_m[d]
+        # print "Consumption, previous month mean:", con_p_m_mean[d]
+        # print "Consumption this month predicted:", cons_t_m_predicted + con_t_m[d]
+        # print "Consumption previous month virtual:", con_p_m_virtual
+        # print "Trend:", (cons_t_m_predicted + con_t_m[d]) - con_p_m_virtual
+
+        # Calculate trend
+        out[d] = {"trend": (cons_t_m_predicted + con_t_m[d]) - con_p_m_virtual,
+                  "prediction": (cons_t_m_predicted + con_t_m[d])}
+    return out
 
 
 def get_this_month_consumption(heat_or_water):
@@ -169,16 +238,16 @@ def get_previous_month_consumption(heat_or_water):
     start_of_month = datetime.date(year,
                                    month,
                                    1)
-    end_of_month = datetime.date(datetime.datetime.today().year,
+    end_of_month = datetime.date(year,
                                  month,
-                                 calendar.monthrange(datetime.datetime.today().year, month)[1])
+                                 calendar.monthrange(year, month)[1])
     d = {}
     for s_id in s_ids:
         location = get_sensor_location(s_id)
         s_name = get_sensor_name(s_id)
         out = db.session.query(db.func.max(SensorData.value) - db.func.min(SensorData.value)). \
             filter(SensorData.timestamp >= start_of_month). \
-            filter(SensorData.timestamp <= end_of_month).\
+            filter(SensorData.timestamp <= end_of_month). \
             filter(SensorData.sensor_id == s_id). \
             order_by(SensorData.timestamp.desc())
         consumption = out.all()[0][0]
@@ -233,4 +302,12 @@ if __name__ == '__main__':
 
     print """\na = get_predicted_month_consumption("water")"""
     a = get_predicted_month_consumption("water")
+    print a
+
+    print """\nget_trends("heat")"""
+    a = get_trends("heat")
+    print a
+
+    print """\nget_trends("water")"""
+    a = get_trends("water")
     print a

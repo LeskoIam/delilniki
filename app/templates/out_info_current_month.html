@@ -7,28 +7,28 @@
         <td title="Lokacija"><b>Lokacija</b></td>
         <td title="Trenutna poraba"><b>Trenutna p.</b></td>
         <td title="Napovedana poraba"><b>Napovedana poraba*</b></td>
-        <td title="Poraba prejšnji mesec"><b>Poraba pr. m.</b></td>
-        <td title="Trend"><b>Trend**</b></td>
+        <td title="Trend"><b>Trend*</b></td>
+        <td title="Poraba prejšnji mesec"><b>Poraba p. mesec</b></td>
         <td>&nbsp;</td>
     </tr>
     {% for d in data.month_heat_consumption.keys() %}
         <tr>
             <td title="Lokacija">{{ d.capitalize() }}</td>
             <td title="Trenutna poraba">{{ data.month_heat_consumption[d]}}</td>
-            <td title="Napovedana poraba">{{ data.predict_month_heat_consumption[d] }}</td>
-            <td title="Poraba prejšnji mesec">{{ data.previous_month_heat_consumption[d] }}</td>
+            <td title="Napovedana poraba">{{ "%0.3f"| format(data.trend_heat[d]["prediction"]|float) }}</td>
 
-            {% if data.predict_month_heat_consumption[d] < data.previous_month_heat_consumption[d] %}
+            {% if data.trend_heat[d]["trend"] < 0 %}
                 <td title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
-                    {{ "%i"| format(data.predict_month_heat_consumption[d] - data.previous_month_heat_consumption[d]|float) }}
+                    {{ "%0.2f"| format(data.trend_heat[d]["trend"]|float) }}
                 </td>
-            {% elif data.predict_month_heat_consumption[d] > data.previous_month_heat_consumption[d] %}
+            {% elif data.trend_heat[d]["trend"] > 0 %}
                 <td title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
-                    {{ "+%i"| format(data.predict_month_heat_consumption[d] - data.previous_month_heat_consumption[d]|float) }}
+                    {{ "+%0.2f"| format(data.trend_heat[d]["trend"]|float) }}
                 </td>
             {% else %}
                 <td title="Trend" bgcolor="#00bfff">0</td>
             {% endif %}
+            <td title="Poraba prejšnji mesec">{{ data.previous_month_heat_consumption[d] }}</td>
         </tr>
     {% endfor %}
     <tr><td><hr></td></tr>
@@ -37,25 +37,24 @@
         <tr>
             <td title="Topla/Hladna">{{ d.capitalize() }}</td>
             <td title="Trenutna poraba">{{ data.month_water_consumption[d]}}</td>
-            <td title="Napovedana poraba">{{ data.predict_month_water_consumption[d] }}</td>
-            <td title="Poraba prejšnji mesec">{{ data.previous_month_water_consumption[d] }}</td>
+            <td title="Napovedana poraba">{{ "%0.3f"| format(data.trend_water[d]["prediction"]|float) }}</td>
         
-            {% if data.predict_month_water_consumption[d] < data.previous_month_water_consumption[d] %}
+            {% if data.trend_water[d]["trend"] < 0 %}
                 <td title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
-                    {{ "%0.3f"| format(data.predict_month_water_consumption[d] - data.previous_month_water_consumption[d]|float) }}
+                    {{ "%0.3f"| format(data.trend_water[d]["trend"]|float) }}
                 </td>
-            {% elif data.predict_month_water_consumption[d] > data.previous_month_water_consumption[d] %}
+            {% elif data.trend_water[d]["trend"] > 0 %}
                 <td title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
-                    {{ "+%0.3f"| format(data.predict_month_water_consumption[d] - data.previous_month_water_consumption[d]|float) }}
+                    {{ "+%0.3f"| format(data.trend_water[d]["trend"]|float) }}
                 </td>
             {% else %}
                 <td title="Trend" bgcolor="#00bfff">0</td>
             {% endif %}
+        <td title="Poraba prejšnji mesec">{{ data.previous_month_water_consumption[d] }}</td>
         </tr>
     {% endfor %}
 </table>
 <br>
-    <span style="font-size: 25px"><b>*</b></span> <span style="font-size: 12px">Napovedana poraba glede na povprečno porabo v obdobju zadnjih 30 dni.</span>
-    <br>
-    <span style="font-size: 25px"><b>**</b></span> <span style="font-size: 12px">Trend porabe, glede na porabo v prejšnjem mesecu.</span>
+    <span style="font-size: 25px"><b>*</b></span>
+    <span style="font-size: 12px"><a href="/more">More...</a></span>
 </div>

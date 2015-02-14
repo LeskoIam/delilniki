@@ -71,6 +71,7 @@ def plot_water_consumption():
         line_chart2.add(topla_hladna_str[x], data2)
     line_chart1.x_labels = map(str, dt)
     line_chart2.x_labels = map(str, dt)
+    text += "<br />"*2
     out = "<div id=\"plot\">"
     out += line_chart0.render(is_unicode=True) + text + "<hr>"
     out += line_chart1.render(is_unicode=True) + "<hr>"

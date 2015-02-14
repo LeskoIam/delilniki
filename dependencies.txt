@@ -1,0 +1,17 @@
+# Dependencies for: delilniki
+# project path: D:\workspace\delilniki
+
+# This dependencies are auto generated and are possibly not complete
+# or there is too much here.
+
+
+flask
+flask.ext.sqlalchemy
+flask.ext.wtf
+imp
+markdown
+migrate.versioning
+migrate.versioning.shell
+pygal
+sqlalchemy
+wtforms

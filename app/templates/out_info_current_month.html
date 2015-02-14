@@ -8,7 +8,7 @@
         <td title="Trenutna poraba"><b>Trenutna p.</b></td>
         <td title="Napovedana poraba"><b>Napovedana poraba*</b></td>
         <td title="Poraba prejšnji mesec"><b>Poraba pr. m.</b></td>
-        <td title="Trend"><b>Trend</b></td>
+        <td title="Trend"><b>Trend**</b></td>
         <td>&nbsp;</td>
     </tr>
     {% for d in data.month_heat_consumption.keys() %}
@@ -19,7 +19,7 @@
             <td title="Poraba prejšnji mesec">{{ data.previous_month_heat_consumption[d] }}</td>
 
             {% if data.predict_month_heat_consumption[d] < data.previous_month_heat_consumption[d] %}
-                <td title="Trend - poraba bo manjšsa kot prejšnji mesec" bgcolor="#adff2f">
+                <td title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
                     {{ "%i"| format(data.predict_month_heat_consumption[d] - data.previous_month_heat_consumption[d]|float) }}
                 </td>
             {% elif data.predict_month_heat_consumption[d] > data.previous_month_heat_consumption[d] %}
@@ -41,7 +41,7 @@
             <td title="Poraba prejšnji mesec">{{ data.previous_month_water_consumption[d] }}</td>
         
             {% if data.predict_month_water_consumption[d] < data.previous_month_water_consumption[d] %}
-                <td title="Trend - poraba bo manjšsa kot prejšnji mesec" bgcolor="#adff2f">
+                <td title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
                     {{ "%0.3f"| format(data.predict_month_water_consumption[d] - data.previous_month_water_consumption[d]|float) }}
                 </td>
             {% elif data.predict_month_water_consumption[d] > data.previous_month_water_consumption[d] %}
@@ -55,5 +55,7 @@
     {% endfor %}
 </table>
 <br>
-<span style="font-size: 25px"><b>*</b></span> <span style="font-size: 12px">Napovedana poraba glede na povprečno porabo v obdobju zadnjih 30 dni.</span>
+    <span style="font-size: 25px"><b>*</b></span> <span style="font-size: 12px">Napovedana poraba glede na povprečno porabo v obdobju zadnjih 30 dni.</span>
+    <br>
+    <span style="font-size: 25px"><b>**</b></span> <span style="font-size: 12px">Trend porabe, glede na porabo v prejšnjem mesecu.</span>
 </div>

@@ -5,12 +5,12 @@
         <td id="u_left">
             <table border="1">
         <tr>
-            <th>id</th>
-            <th>datetime</th>
-            <th>value</th>
-            <th>unit</th>
-            <th>sensor name</th>
-            <th>location</th>
+            <th>ID</th>
+            <th>Timestamp</th>
+            <th>Value</th>
+            <th>Unit</th>
+            <th>Sensor name</th>
+            <th>Location</th>
         </tr>
             {% for data, sensor in sensor_data %}
                 <tr>
@@ -35,23 +35,16 @@
     </tr>
     <tr id="bottom">
         <td id="b_left">
-            {{ data.plot_heat_consumption|safe }}
-            {{ data.plot_water_consumption|safe }}
-        </td>
-
-        <td id="b_right">
-            <div id="plot">
-                {{ data.plot_heat_dividers|safe }}
-            </div>
-            <div id="plot">
-                {{ data.plot_water_counter|safe }}
-            </div>
-            <div id="plot">
+             <div id="plot">
                 {{ data.plot_heat|safe }}
             </div>
+            {{ data.plot_heat_consumption|safe }}
+        </td>
+        <td id="b_right">
             <div id="plot">
                 {{ data.plot_water|safe }}
             </div>
+            {{ data.plot_water_consumption|safe }}
         </td>
     </tr>
 </table>

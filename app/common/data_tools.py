@@ -120,8 +120,26 @@ def get_this_month_consumption(heat_or_water):
     return d
 
 
-def get_predicted_month_consumption(heat_or_water):
-    data = get_ndays_back_mean(heat_or_water, 30)
+def get_predicted_month_consumption(heat_or_water, back_period=None):
+    """Calculate current mont predicted consumption,
+
+    based on already used units in this month and predicted usage in remaining
+    days of the month.
+
+    consumption_rate: average consumption for 'back_period' days back
+    month_days: number of days in a month
+    today = today's day
+    already_used = already used in this month
+    predict = (consumption_rate * (month_days - today)) + already_used
+
+    :param heat_or_water: string, 'heat' or 'water'
+    :param back_period: integer, days back to calculate average consumption
+    :return: dictionary of location/name to prediction mapping
+    """
+    if back_period is None:
+        month = datetime.datetime.today().month
+        back_period = calendar.monthrange(datetime.datetime.today().year, month)[1]
+    data = get_ndays_back_mean(heat_or_water, back_period)
     used = get_this_month_consumption(heat_or_water)
     out = {}
     for d in data:
@@ -143,6 +161,8 @@ def get_previous_month_consumption(heat_or_water):
     month = datetime.datetime.today().month
     month -= 1
     year = datetime.datetime.today().year
+    # If we are in January we must compensate and change month to December.
+    # And let's not forget to subtract one from year too :) !
     if month < 1:
         month = 12
         year -= 1
@@ -151,8 +171,7 @@ def get_previous_month_consumption(heat_or_water):
                                    1)
     end_of_month = datetime.date(datetime.datetime.today().year,
                                  month,
-                                 calendar.monthrange(datetime.datetime.today().year,
-                                                     month)[1])
+                                 calendar.monthrange(datetime.datetime.today().year, month)[1])
     d = {}
     for s_id in s_ids:
         location = get_sensor_location(s_id)

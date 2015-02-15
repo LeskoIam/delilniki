@@ -1,3 +1,4 @@
+http://www.codecogs.com/latex/eqneditor.php
 d = c * e\\
 f = b * g\\
 \\

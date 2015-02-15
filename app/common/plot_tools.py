@@ -61,7 +61,7 @@ def plot_water_consumption():
         data, _, dt = num_tools.running_consumption(cons, timestamp)
         line_chart0.add(topla_hladna_str[x], data)
         text += topla_hladna_str[x].capitalize() + ": %3.3f [st.dev: %3.3f]<br />" % (num_tools.mean(data), num_tools.st_dev(data))
-        print topla_hladna_str[x].capitalize(), num_tools.st_dev(data)
+        # print topla_hladna_str[x].capitalize(), num_tools.st_dev(data)
 
         data1 = num_tools.Simplemovingaverage(3, data)
         data1 = data1.calculate()
@@ -102,7 +102,7 @@ def plot_heat_consumption():
         data, _, dt = num_tools.running_consumption(data, time_delta)
         line_chart0.add(loc, data)
         text += loc.capitalize() + ": %3.3f [st.dev: %3.3f]<br />" % (num_tools.mean(data), num_tools.st_dev(data))
-        print loc.capitalize(), num_tools.st_dev(data)
+        # print loc.capitalize(), num_tools.st_dev(data)
 
         data1 = num_tools.Simplemovingaverage(3, data)
         data1 = data1.calculate()

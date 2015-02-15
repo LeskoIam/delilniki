@@ -118,8 +118,6 @@ def show():
             "sum_predict_heat": sum([x["prediction"] for x in trend_heat.values()]),
             "sum_last_water": sum([x for x in previous_month_water.values()]),
             "sum_last_heat": sum([x for x in previous_month_heat.values()]),
-            "sum_trend_heat": sum([x["trend"] for x in trend_heat.values()]),
-            "sum_trend_water": sum([x["trend"] for x in trend_water.values()]),
 
             "css": "show.css"}
     return render_template('show.html',

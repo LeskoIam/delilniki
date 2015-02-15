@@ -5,4 +5,4 @@ __author__ = 'Lesko'
 # When it lies to you, it may be a while before you realize something's wrong.
 from app import app
 print "#################  ", "Alpha deploy", "  #################"
-app.run(host="192.168.1.52", port=80, debug=True)
+app.run(host="192.168.1.52", port=8005, debug=True)

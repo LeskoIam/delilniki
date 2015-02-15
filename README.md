@@ -4,6 +4,8 @@ A Flask app to track heat and water consumption (manually).
 
 Just download and run, I even supplied some data, so that it shows things write away.
 
+Live sample can be seen here: [Leskos.si](http://leskos.si/)
+
 ___
 
 This app was born out of necessity, because I don't trust my building warden. 

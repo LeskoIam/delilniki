@@ -6,6 +6,8 @@ Just download and run, I even supplied some data, so that it shows things write 
 
 Live sample can be seen here: [Leskos.si](http://leskos.si/)
 
+Contact me at [polensek.matevz@gmail.com](mailto:polensek.matevz@gmail.com)
+
 ___
 
 This app was born out of necessity, because I don't trust my building warden. 

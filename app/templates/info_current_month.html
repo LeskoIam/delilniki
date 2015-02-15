@@ -19,10 +19,12 @@
 
             {% if data.trend_heat[d]["trend"] < 0 %}
                 <td id="center_td" title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
+                {{ "%0.2f"| format(data.trend_heat[d]["trend"]|float) }} %
             {% else %}
                 <td id="center_td" title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
+                {{ "+%0.2f"| format(data.trend_heat[d]["trend"]|float) }} %
             {% endif %}
-            {{ "%0.2f"| format(data.trend_heat[d]["trend"]|float) }} %</td>
+            </td>
 
             <td id="center_td" title="Poraba prejšnji mesec">{{ data.previous_month_heat_consumption[d] }}</td>
         </tr>
@@ -33,10 +35,12 @@
         <td id="center_td">{{ "%0.2f"| format(data.sum_predict_heat|float) }}</td>
         {% if data.sum_trend_heat < 0 %}
             <td id="center_td" title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
+            {{ "%0.2f"| format(data.sum_trend_heat|float) }} %
         {% else %}
             <td id="center_td" title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
+            {{ "+%0.2f"| format(data.sum_trend_heat|float) }} %
         {% endif %}
-        {{ "%0.2f"| format(data.sum_trend_heat|float) }} %</td>
+        </td>
         <td id="center_td">{{ data.sum_last_heat }}</td>
     </tr>
     <tr><td><hr></td></tr>
@@ -46,18 +50,14 @@
             <td title="Topla/Hladna">{{ d.capitalize() }}</td>
             <td id="center_td" title="Trenutna poraba">{{ data.month_water_consumption[d]}}</td>
             <td id="center_td" title="Napovedana poraba">{{ "%0.3f"| format(data.trend_water[d]["prediction"]|float) }}</td>
-
             {% if data.trend_water[d]["trend"] < 0 %}
                 <td id="center_td" title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
                     {{ "%0.2f"| format(data.trend_water[d]["trend"]|float) }} %
-                </td>
-            {% elif data.trend_water[d]["trend"] > 0 %}
-                <td id="center_td" title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
-                    {{ "+%0.2f"| format(data.trend_water[d]["trend"]|float) }} %
-                </td>
             {% else %}
-                <td id="center_td" title="Trend" bgcolor="#00bfff">0%</td>
+                <td id="center_td" title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">+
+                    {{ "+%0.2f"| format(data.trend_water[d]["trend"]|float) }} %
             {% endif %}
+            </td>
         <td id="center_td" title="Poraba prejšnji mesec">
             {{ data.previous_month_water_consumption[d] }}
         </td>
@@ -69,10 +69,12 @@
         <td id="center_td">{{ "%0.3f"| format(data.sum_predict_water|float) }}</td>
         {% if data.sum_trend_water < 0 %}
             <td id="center_td" title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
+            {{ "%0.3f"| format(data.sum_trend_water|float) }} %
         {% else %}
             <td id="center_td" title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
+            {{ "+%0.3f"| format(data.sum_trend_water|float) }} %
         {% endif %}
-        {{ "%0.3f"| format(data.sum_trend_water|float) }} %</td>
+        </td>
         <td id="center_td">{{ "%0.3f"| format(data.sum_last_water|float) }}</td>
     </tr>
 </table>

@@ -163,8 +163,11 @@ def get_trends(heat_or_water, back_period=None):
         # print "Trend:", (cons_t_m_predicted + con_t_m[d]) - con_p_m_virtual
 
         # Calculate trend
-        out[d] = {"trend": (cons_t_m_predicted + con_t_m[d]) - con_p_m_virtual,
-                  "prediction": (cons_t_m_predicted + con_t_m[d])}
+        trend = (cons_t_m_predicted + con_t_m[d]) - con_p_m_virtual
+        prediction = (cons_t_m_predicted + con_t_m[d])
+        trend = -1 * (100 - ((prediction + trend)*100.)/prediction)
+        out[d] = {"trend": trend,
+                  "prediction": prediction}
     return out
 
 

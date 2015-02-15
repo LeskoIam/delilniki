@@ -1,0 +1,7 @@
+d = c * e\\
+f = b * g\\
+\\
+\normalsize P = d + a\\
+\normalsize T = (d + a) - f\\
+\\
+\normalsize Tp = -\left( 100 - \frac{(P + T)*100}{P}\right)\\

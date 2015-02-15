@@ -5,7 +5,6 @@ __author__ = 'Lesko'
 # When it lies to you, it may be a while before you realize something's wrong.
 from flask import render_template, flash, redirect, Markup
 from app import app, db
-from forms import MeasurePointsForm
 from models import SensorData, Sensor
 import datetime
 import common.plot_tools as plot_tools
@@ -30,58 +29,10 @@ def index():
                            data=data)
 
 
-@app.route('/value_input', methods=['GET', 'POST'])
+@app.route("/value_input")
 def value_input():
-    data = {"title": title_handler("Value Input")}
-    form = MeasurePointsForm()
-    if form.validate_on_submit():
-        # Kuhinja
-        sensor_id_kuhinja = Sensor.query.filter_by(location="kuhinja", type="delilnik").first()
-        timestamp = datetime.datetime.utcnow()
-        if form.kuhinja.data is not None:
-            data = SensorData(timestamp, form.kuhinja.data, None, sensor_id_kuhinja.id)
-            db.session.add(data)
-
-        # Hodnik
-        sensor_id_hodnik = Sensor.query.filter_by(location="hodnik", type="delilnik").first()
-        if form.hodnik.data is not None:
-            data = SensorData(timestamp, form.hodnik.data, None, sensor_id_hodnik.id)
-            db.session.add(data)
-
-        # Kopalnica
-        sensor_id_kopalnica = Sensor.query.filter_by(location="kopalnica", type="delilnik").first()
-        if form.kopalnica.data is not None:
-            data = SensorData(timestamp, form.kopalnica.data, None, sensor_id_kopalnica.id)
-            db.session.add(data)
-
-        # Soba
-        sensor_id_soba = Sensor.query.filter_by(location="soba", type="delilnik").first()
-        if form.soba.data is not None:
-            data = SensorData(timestamp, form.soba.data, None, sensor_id_soba.id)
-            db.session.add(data)
-
-        # Topla voda
-        sensor_id_topla_voda = Sensor.query.filter_by(location="hodnik",
-                                                      type="merilna ura",
-                                                      name="topla voda").first()
-        if form.topla_voda.data is not None:
-            data = SensorData(timestamp, form.topla_voda.data, "m3", sensor_id_topla_voda.id)
-            db.session.add(data)
-
-        # Hladna voda
-        sensor_id_hladna_voda = Sensor.query.filter_by(location="hodnik",
-                                                       type="merilna ura",
-                                                       name="hladna voda").first()
-        if form.hladna_voda.data is not None:
-            data = SensorData(timestamp, form.hladna_voda.data, "m3", sensor_id_hladna_voda.id)
-            db.session.add(data)
-
-        db.session.commit()
-        flash("Uspesno ste vnesli podatke!")
-        return redirect('/show')
-    return render_template('input_form.html',
-                           form=form,
-                           data=data)
+    data = {"title": title_handler("Show All")}
+    return render_template("input_form.html", data=data)
 
 
 @app.route("/show")

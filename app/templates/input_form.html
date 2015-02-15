@@ -1,41 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    <form action="" method="post" name="login">
-        {{ form.hidden_tag() }}
-        <div>
-            <table>
-                <tr>
-                    <td><h2>Delilniki</h2></td>
-                </tr>
-                <tr>
-                    <td>Kuhinja</td>
-                    <td>{{ form.kuhinja(size=20) }}</td>
-                </tr>
-                <tr>
-                    <td>Hodnik</td>
-                    <td>{{ form.hodnik(size=20) }}</td>
-                </tr>
-                <tr>
-                    <td>Kopalnica</td>
-                    <td>{{ form.kopalnica(size=20) }}</td>
-                </tr>
-                <tr>
-                    <td>Soba</td>
-                    <td>{{ form.soba(size=20) }}</td>
-                </tr>
-                <tr>
-                    <td><h2>Voda</h2></td>
-                </tr>
-                <tr>
-                    <td>Topla voda</td>
-                    <td>{{ form.topla_voda(size=20) }} m3</td>
-                </tr>
-                <tr>
-                    <td>Hladna voda</td>
-                    <td>{{ form.hladna_voda(size=20) }} m3</td>
-                </tr>
-            </table>
-        </div>
-        <p><input type="submit" value="OK"></p>
-    </form>
+    <span style="color: red"> <b>This feature is disabled for now.</b></span><br>
+    <img src="{{ url_for('static', filename='input_form.png') }}" alt="Mountain View"><br>
+    <span style="color: red"> <b>This feature is disabled for now.</b></span><br>
 {% endblock %}

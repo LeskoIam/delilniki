@@ -6,7 +6,6 @@ __author__ = 'Lesko'
 from flask import render_template, flash, redirect, Markup
 from app import app, db
 from models import SensorData, Sensor
-import datetime
 import common.plot_tools as plot_tools
 import common.data_tools as data_tools
 import config

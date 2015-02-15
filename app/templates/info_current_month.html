@@ -48,11 +48,11 @@
 
             {% if data.trend_water[d]["trend"] < 0 %}
                 <td id="center_td" title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
-                    {{ "%0.3f"| format(data.trend_water[d]["trend"]|float) }} %
+                    {{ "%0.2f"| format(data.trend_water[d]["trend"]|float) }} %
                 </td>
             {% elif data.trend_water[d]["trend"] > 0 %}
                 <td id="center_td" title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
-                    {{ "+%0.3f"| format(data.trend_water[d]["trend"]|float) }} %
+                    {{ "+%0.2f"| format(data.trend_water[d]["trend"]|float) }} %
                 </td>
             {% else %}
                 <td id="center_td" title="Trend" bgcolor="#00bfff">0%</td>

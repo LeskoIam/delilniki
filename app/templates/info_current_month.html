@@ -47,7 +47,7 @@
                 <td id="center_td" title="Trend - poraba bo manjša kot prejšnji mesec" bgcolor="#adff2f">
                     {{ "%0.2f"| format(data.trend_water[d]["trend"]|float) }} %
             {% else %}
-                <td id="center_td" title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">+
+                <td id="center_td" title="Trend - poraba bo večja kot prejšnji mesec" bgcolor="red">
                     {{ "+%0.2f"| format(data.trend_water[d]["trend"]|float) }} %
             {% endif %}
             </td>

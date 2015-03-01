@@ -185,6 +185,8 @@ def get_this_month_consumption(heat_or_water):
             filter(SensorData.sensor_id == s_id). \
             order_by(SensorData.timestamp.desc())
         consumption = out.all()[0][0]
+        if consumption is None:  # No data for current month
+            consumption = 0
         if heat_or_water == "heat":
             d[location] = consumption
         else:

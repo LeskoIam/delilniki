@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<table id="main_table">
+    <tr id="upper">
+        <td id="u_left">
+            <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Timestamp</th>
+            <th>Value</th>
+            <th>Unit</th>
+            <th>Sensor name</th>
+            <th>Location</th>
+        </tr>
+            {% for data, sensor in sensor_data %}
+                <tr>
+                <td>{{ data.id }}</td>
+                <td>{{ data.timestamp }}</td>
+                <td align="center">{{ data.value }}</td>
+                {% if data.unit != None %}
+                    <td>{{ data.unit }}</td>
+                {% else %}
+                    <td>&nbsp;</td>
+                {% endif %}
+                <td>{{ sensor.name}}</td>
+                <td>{{ sensor.location }}</td>
+            {% endfor %}
+        </table>
+        </td>
+        <td id="u_right">
+            {% block water %}
+                {% include "info_current_month.html" %}
+            {% endblock %}
+        </td>
+    </tr>
+
+
+    <tr id="bottom">
+        <td id="b_left">
+                <div id={{ chartID|safe }} class="chart" style="height: 100px; width: 500px"></div>
+                <script>
+                    var chart_id = {{ chartID|safe }};
+                    var series = {{ series|safe }};
+                    var title = {{ title|safe }};
+                    var xAxis = {{ xAxis|safe }};
+                    var yAxis = {{ yAxis|safe }};
+                    var chart = {{ chart|safe }};
+                    $(document).ready(function() {
+                        $(chart_id).highcharts({
+                            chart: chart,
+                            title: title,
+                            xAxis: xAxis,
+                            yAxis: yAxis,
+                            series: series,
+                            legend: {shadow: true}
+                        });
+                    });
+                </script>
+            {{ data.plot_heat_consumption|safe }}
+        </td>
+        <td id="b_right">
+            <div id="plot">
+                {{ data.plot_water|safe }}
+            </div>
+            {{ data.plot_water_consumption|safe }}
+        </td>
+    </tr>
+</table>
+{% endblock %}
